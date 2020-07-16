@@ -4,12 +4,7 @@ package com.zuitt.capstone3.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +16,11 @@ public class Appointment {
     private String id = UUID.randomUUID().toString();
     private String serviceType;
     private String appointmentDate;
-    private String timeSlot;
     private String appointmentLocation;
     private Boolean isAccepted = false;
     private Boolean isFulfilled = false;
     private Boolean isExpired = false;
+    private Boolean isDeleted = false;
     private Date createdAt;
     private Date updatedAt;
 
@@ -36,10 +31,9 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String serviceType, String appointmentDate, String timeSlot, String appointmentLocation) {
+    public Appointment(String serviceType, String appointmentDate, String appointmentLocation) {
         this.serviceType = serviceType;
         this.appointmentDate = appointmentDate;
-        this.timeSlot = timeSlot;
         this.appointmentLocation = appointmentLocation;
     }
 
@@ -61,14 +55,6 @@ public class Appointment {
 
     public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
-    }
-
-    public String getTimeSlot() {
-        return timeSlot;
-    }
-
-    public void setTimeSlot(String timeSlot) {
-        this.timeSlot = timeSlot;
     }
 
     public String getAppointmentLocation() {
@@ -129,5 +115,13 @@ public class Appointment {
 
     public void setExpired(Boolean expired) {
         isExpired = expired;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }

@@ -38,14 +38,14 @@ public class UserController {
 
     @PostMapping("/appointments")
     public List<Appointment> getAvailableAppointments() {
-        List<Appointment> notExp = new ArrayList<>();
+        List<Appointment> returnThis = new ArrayList<>();
         List<Appointment> notAcc = appointmentRepository.findByIsAccepted(false);
         notAcc.forEach(n -> {
-            if (!n.getExpired()) {
-                notExp.add(n);
+            if (!n.getExpired() && !n.getDeleted()) {
+                returnThis.add(n);
             }
         });
-        return notExp;
+        return returnThis;
     }
 
     @PostMapping("/appointments/request/{customer_id}")
@@ -116,11 +116,11 @@ public class UserController {
         if(!deleteThisAppointment.getAccepted()) {
             if (deleteThisAppointment.getTransactingUsers().size() <= 1) {
                 User user1 = userRepository.findById(deleteThisAppointment.getTransactingUsers().get(0).getId()).get();
-                System.out.println("Ansabe ng jeep?!");
-                appointmentRepository.delete(deleteThisAppointment);
+                deleteThisAppointment.setDeleted(true);
+                appointmentRepository.save(deleteThisAppointment);
                 user1.getAppointments().remove(deleteThisAppointment);
                 userRepository.save(user1);
-                return "success";
+                return "Appointment Removed";
             }
         }
         return "failed";
