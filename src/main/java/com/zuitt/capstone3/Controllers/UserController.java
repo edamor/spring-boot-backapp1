@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://edamor.github.io/backapp3")
 @RequestMapping("/users")
 public class UserController {
     @Autowired

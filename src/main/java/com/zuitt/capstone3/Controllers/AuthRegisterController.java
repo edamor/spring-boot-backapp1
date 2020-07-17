@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://edamor.github.io/backapp3")
 @RequestMapping("/")
 public class AuthRegisterController {
     @Autowired
