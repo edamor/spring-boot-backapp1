@@ -24,14 +24,16 @@ public class AuthRegisterController {
     private String secretKey;
 
     @PostMapping("register/{user_role}")
-    public User registerMember(@RequestBody User user,
+    public int registerMember(@RequestBody User user,
                                @PathVariable String user_role) {
-        String hashedPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        user.setPassword(hashedPw);
-        Role userRole = new Role();
-        userRole.setUserRole(user_role);
-        user.setRole(userRole);
-        return userRepository.save(user);
+        if (!checkIfUsernameExists(user.getUsername())) {
+            String hashedPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            user.setPassword(hashedPw);
+            Role userRole = new Role();
+            userRole.setUserRole(user_role);
+            user.setRole(userRole);
+            return 1;
+        } else return 0;
     }
 
     @GetMapping("/register/{username}")
