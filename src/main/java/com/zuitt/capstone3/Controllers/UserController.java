@@ -26,6 +26,11 @@ public class UserController {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    @GetMapping("/")
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
     @GetMapping("/user/{user_id}")
     public User getUser(@PathVariable String user_id) {
         return userRepository.findById(user_id).get();
